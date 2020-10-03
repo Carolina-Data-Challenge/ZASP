@@ -1,4 +1,4 @@
-FIPS,county_name,state,hs_grad_rate
+county_code,county_name,state,hs_grad_rate
 1001,autauga-county-al,al,0.9
 1003,baldwin-county-al,al,0.86
 1005,barbour-county-al,al,0.81
