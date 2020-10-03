@@ -1,5 +1,5 @@
 import csv
-from typing import Iterable, Any
+from typing import Iterable
 
 
 def print_headers(d_reader: csv.DictReader):
@@ -12,6 +12,11 @@ def write_to_file(file: str, d_reader: csv.DictReader, a: Iterable[str],
                   overwrite: bool = False):
     with open(file, 'w+' if overwrite else 'a+') as result:
         writer = csv.writer(result)
+
+        # Add column headers.
+        if overwrite:
+            writer.writerow(a)
+
         for row in d_reader:
             writer.writerow(map(row.get, a))
 
@@ -19,10 +24,16 @@ def write_to_file(file: str, d_reader: csv.DictReader, a: Iterable[str],
 with open('year_2018.csv', 'r') as original:
     reader = csv.DictReader(original)
     print_headers(reader)
-    write_to_file('trimmed.csv', reader, ('activity_year', 'state_code'),
+    write_to_file('trimmed.csv', reader, ('activity_year', 'income', 'loan_to_value',
+                                          'loan_purpose', 'interest_rate', 'loan_term',
+                                          'debt_to_income_ratio', 'loan_amount',
+                                          'action_taken', 'hoepa_status'),
                   True)
 
 with open('year_2019.csv', 'r') as original:
     reader = csv.DictReader(original)
     print_headers(reader)
-    write_to_file('trimmed.csv', reader, ('activity_year', 'state_code'))
+    write_to_file('trimmed.csv', reader, ('activity_year', 'income', 'loan_to_value',
+                                          'loan_purpose', 'interest_rate', 'loan_term',
+                                          'debt_to_income_ratio', 'loan_amount',
+                                          'action_taken', 'hoepa_status'))
