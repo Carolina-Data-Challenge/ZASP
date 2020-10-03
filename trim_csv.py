@@ -1,4 +1,5 @@
 import csv
+from typing import Iterable, Any
 
 
 def print_headers(d_reader: csv.DictReader):
@@ -7,18 +8,21 @@ def print_headers(d_reader: csv.DictReader):
         print(header)
 
 
-# Open the original data.
-with open('year_2018.csv', 'r') as original:
-    # Create reader from original data.
-    reader = csv.DictReader(original)
-
-    # Print headers.
-    print_headers(reader)
-
-    # Open CSV to create trimmed data.
-    with open('year_2018_trimmed.csv', 'w') as result:
+def write_to_file(file: str, d_reader: csv.DictReader, a: Iterable[str],
+                  overwrite: bool = False):
+    with open(file, 'w+' if overwrite else 'a+') as result:
         writer = csv.writer(result)
-        for row in reader:
-            # Change this line to include whatever fields
-            # you want.
-            writer.writerow((row['county_code'], row['income']))
+        for row in d_reader:
+            writer.writerow(map(row.get, a))
+
+
+with open('year_2018.csv', 'r') as original:
+    reader = csv.DictReader(original)
+    print_headers(reader)
+    write_to_file('trimmed.csv', reader, ('activity_year', 'state_code'),
+                  True)
+
+with open('year_2019.csv', 'r') as original:
+    reader = csv.DictReader(original)
+    print_headers(reader)
+    write_to_file('trimmed.csv', reader, ('activity_year', 'state_code'))
