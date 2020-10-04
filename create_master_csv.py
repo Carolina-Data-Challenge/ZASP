@@ -12,7 +12,7 @@ def create_master_csv(year: str):
 
     master['employment_rate'] = 100 - master['unemployment_rate']
     master['hs_grad_rate'] = master['hs_grad_rate'] * 100.0
-    master['county_code'] = master['county_code'].transform(lambda x: str(x).zfill(5))
+    master['county_code'] = master['county_code'].transform(lambda x: str(x).replace('.0', '').zfill(5))
 
     pmt = master['loan_amount'] / 360.0
     qualifying_income = pmt * 4 * 12
