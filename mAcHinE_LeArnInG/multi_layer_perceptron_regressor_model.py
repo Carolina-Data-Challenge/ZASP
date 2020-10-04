@@ -55,7 +55,7 @@ class MLPRegressorModel(MachineLearningModel):
         self.param_grid = {'hidden_layer_sizes': [(110, 110, 110, 110, 110, 110, 110, 110)],
                            'shuffle': [False],
                            'max_iter': [1000],
-                           'solver': ['adam', 'lbfgs'],
+                           'solver': ['lbfgs'],
                            'random_state': [self.random_state]}
 
         self.cv_results = GridSearchCV(self.model,
