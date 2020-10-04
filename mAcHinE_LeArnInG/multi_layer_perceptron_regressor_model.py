@@ -34,6 +34,7 @@ class MLPRegressorModel(MachineLearningModel):
                 self.data_df = self.data_df.rename(columns={'zasp_index': f'zasp_index_{self.prediction_year - i}'})
 
         self.data_df = self.data_df.dropna()
+        self.county_codes = self.data_df.iloc[:, 0]
         self.combined_data = self.data_df.iloc[:, 1:].to_numpy()
         logging.debug(f'combined_data: \n {self.combined_data} \n')
         self.X = self.data_df.iloc[:, 1:-1].to_numpy()
@@ -41,7 +42,7 @@ class MLPRegressorModel(MachineLearningModel):
         self.y = self.data_df.iloc[:, -1].tolist()
         logging.debug(f'y data: \n {self.y} \n')
 
-        return self.X, self.y, self.combined_data
+        return self.X, self.y, self.combined_data,self.county_codes
 
     def train_and_test(self, X, y):
         self.model = super().train_and_test(X, y)
