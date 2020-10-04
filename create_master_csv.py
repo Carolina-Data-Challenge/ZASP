@@ -11,6 +11,7 @@ def create_master_csv(year: str):
     master.rename(columns={'unemployment_rate_' + year: 'unemployment_rate'}, inplace=True)
 
     master['employment_rate'] = 100 - master['unemployment_rate']
+    master['hs_grad_rate'] = master['hs_grad_rate'] * 100.0
     master['county_code'] = master['county_code'].transform(lambda x: str(x).zfill(5))
 
     pmt = master['loan_amount'] / 360.0
