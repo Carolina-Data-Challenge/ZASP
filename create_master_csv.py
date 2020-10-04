@@ -16,7 +16,9 @@ def create_master_csv(year: str):
 
     pmt = master['loan_amount'] / 360.0
     qualifying_income = pmt * 4 * 12
-    master['affordability_index'] = master['income'] / qualifying_income * 100 * 1000
+    master['affordability_index'] = master['income'] / qualifying_income * 100 * 1000 / 5.1
+
+    master['affordability_index'] = master['affordability_index'].transform(lambda x: min(x, 100))
 
     master['zasp_index'] = 0.5 * master['affordability_index'] + 0.25 * master['employment_rate'] + 0.25 * master[
         'hs_grad_rate']
