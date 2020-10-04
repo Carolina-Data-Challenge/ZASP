@@ -10,7 +10,7 @@ ax = pd.read_csv("master_2018.csv", encoding="ISO-8859-1", dtype={"county_code":
 bx = pd.read_csv("master_2019.csv", encoding="ISO-8859-1", dtype={"county_code": str})
 ax['Year'] = 2018
 bx['Year'] = 2019
-tx = pd.concat([ax,bx])
+tx = pd.concat([ax, bx])
 
 fig = px.choropleth_mapbox(tx, geojson=counties, animation_frame= 'Year',animation_group='county_code', locations='county_code', color='zasp_index',
                            color_continuous_scale="Viridis",

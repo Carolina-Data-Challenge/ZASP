@@ -79,6 +79,9 @@ class MLPRegressorModel(MachineLearningModel):
         else:
             self.predictions = np.append(self.predictions,
                                          model.predict(self.combined_data[:, -1].reshape(-1, 1)).reshape(-1, 1), axis=1)
+            # would have to be changed slightly if actually using time series cross validation:
+            # would need to make sure that the data fed in (a slice of combined_data) was the same dimension as X during
+            # the last stage of cross validation training
             self.combined_data = np.append(self.combined_data, self.predictions[:, -1].reshape(-1, 1), axis=1)
         logging.debug(f'\n\n Predictions: \n {self.predictions} \nCombined Data: \n {self.combined_data} \n')
 
