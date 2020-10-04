@@ -83,7 +83,6 @@ class MLPRegressorModel(MachineLearningModel):
         if self.prediction_depth != 0:
             self.prediction_depth -= 1
             logging.debug(f'creating predictions; iteration: {self.prediction_depth}')
-            self.predict(combined_data, model)
+            self.predict(self.combined_data, model)
 
-        logging.info(f' Predictions Created.')
         return self.predictions
