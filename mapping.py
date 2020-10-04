@@ -19,7 +19,7 @@ fig = px.choropleth_mapbox(tx, geojson=counties, animation_frame='Year', animati
                            color_continuous_scale="Viridis",
                            mapbox_style="carto-positron",
                            zoom=3, center={"lat": 37.0902, "lon": -95.7129},
-                           opacity=0.5,
+                           opacity=0.5, range_color=[50, 100],
                            labels={'unemp': 'unemployment rate'}
                            )
 fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
