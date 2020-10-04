@@ -54,7 +54,7 @@ class MLPRegressorModel(MachineLearningModel):
 
         self.param_grid = {'hidden_layer_sizes': [(110, 110, 110, 110, 110, 110, 110, 110)],
                            'shuffle': [False],
-                           'max_iter': [1000],
+                           'max_iter': [5000],
                            'solver': ['lbfgs'],
                            'random_state': [self.random_state]}
 
@@ -85,4 +85,5 @@ class MLPRegressorModel(MachineLearningModel):
             logging.debug(f'creating predictions; iteration: {self.prediction_depth}')
             self.predict(combined_data, model)
 
+        logging.info(f' Predictions Created.')
         return self.predictions
