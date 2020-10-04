@@ -1,41 +1,27 @@
-import csv
+import pandas as pd
 
 
-def create_master(year: str):
-    with open('finance_data_' + year + '.csv', 'r') as finance:
+def create_master_csv(year: str):
+    mortgage = pd.read_csv('mortgage-data/mortgage_summary_' + year + '.csv')
+    high_school = pd.read_csv('high-school-graduation-data/hs_grad_rate.csv')
+    unemployment = pd.read_csv('unemployment-data/unemployment_rate_' + year + '.csv')
 
-        finance_reader = csv.DictReader(finance)
+    master = pd.merge(mortgage, high_school)
+    master = pd.merge(master, unemployment)
+    master.rename(columns={'unemployment_rate_' + year: 'unemployment_rate'}, inplace=True)
 
-        with open('hs_grad_rate.csv', 'r') as hs:
+    master['employment_rate'] = 100 - master['unemployment_rate']
+    master['county_code'] = master['county_code'].transform(lambda x: str(x).zfill(5))
 
-            hs_reader = csv.DictReader(hs)
+    pmt = master['loan_amount'] / 360.0
+    qualifying_income = pmt * 4 * 12
+    master['affordability_index'] = master['income'] / qualifying_income * 100
 
-            with open('unemployment_rate_' + year + '.csv', 'r') as unemployment:
+    master['zasp_index'] = 0.5 * master['affordability_index'] + 0.25 * master['employment_rate'] + 0.25 * master[
+        'hs_grad_rate']
 
-                unemployment_reader = csv.DictReader(unemployment)
-
-                with open('master_' + year + '.csv', 'w+') as write:
-
-                    writer = csv.writer(write)
-                    writer.writerow(finance_reader.fieldnames
-                                    + ['grad_rate', 'unemployment_rate'])
-
-                    hs_row = next(hs_reader)
-                    unemployment_row = next(unemployment_reader)
-
-                    for row in finance_reader:
-                        county_code = int(float(row['county_code']))
-                        if county_code > 56045:
-                            break
-
-                        if county_code == int(hs_row['FIPS']):
-                            writer.writerow(
-                                (row['county_code'], row['income'], row['loan_amount'], hs_row['hs_grad_rate'],
-                                 unemployment_row['Unemployment_rate_' + year]))
-
-                        hs_row = next(hs_reader)
-                        unemployment_row = next(unemployment_reader)
+    master.to_csv('master_' + year + '.csv', index=False)
 
 
-create_master('2018')
-create_master('2019')
+create_master_csv('2018')
+create_master_csv('2019')
