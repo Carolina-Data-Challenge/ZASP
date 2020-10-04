@@ -67,7 +67,7 @@ class MachineLearningModel:
     def predict(self, combined_data, model):
         """
         Creates predictions based on the best available trained model created in the train_and_test method.
-        :param combined_data: all available data, and will be used if recursively creating multi year predictions
+        :param combined_data: all available data, and will be used recursively if creating multi year predictions
         :param model: a trained model to use when creating predictions
         :return: Predictions for the prediction year(s)
         """

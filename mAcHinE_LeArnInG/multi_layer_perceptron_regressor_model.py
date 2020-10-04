@@ -1,7 +1,8 @@
 from os import path
 
+import pandas as pd
 from sklearn.metrics import median_absolute_error
-from sklearn.model_selection import train_test_split, TimeSeriesSplit, cross_validate, GridSearchCV
+from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.neural_network import MLPRegressor
 
 from mAcHinE_LeArnInG.machine_learning_parent_class import *
@@ -22,7 +23,8 @@ class MLPRegressorModel(MachineLearningModel):
         self.data_df = pd.DataFrame()
 
         for i in range(self.data_depth, 0, -1):
-            logging.debug(f'fetching data; for loop iteration: {self.data_depth - i}; lookup_year: {self.prediction_year - i}')
+            logging.debug(
+                f'fetching data; for loop iteration: {self.data_depth - i}; lookup_year: {self.prediction_year - i}')
             with open(path.abspath(f"../master_{self.prediction_year - i}.csv"), 'r') as file:
                 data = pd.read_csv(file)
                 if i == self.data_depth:
@@ -74,9 +76,9 @@ class MLPRegressorModel(MachineLearningModel):
             self.predictions = model.predict(combined_data[:, -1].reshape(-1, 1)).reshape(-1, 1)
             self.combined_data = np.append(combined_data, self.predictions.reshape(-1, 1), axis=1)
         else:
-            self.predictions = np.append(self.predictions, model.predict(self.combined_data[:, -1].reshape(-1, 1)).reshape(-1, 1), axis=1)
+            self.predictions = np.append(self.predictions,
+                                         model.predict(self.combined_data[:, -1].reshape(-1, 1)).reshape(-1, 1), axis=1)
             self.combined_data = np.append(self.combined_data, self.predictions[:, -1].reshape(-1, 1), axis=1)
-            # self.combined_data = np.append((self.combined_data, self.predictions[i].T), axis=1)
         logging.debug(f'\n\n Predictions: \n {self.predictions} \nCombined Data: \n {self.combined_data} \n')
 
         if self.prediction_depth != 0:
