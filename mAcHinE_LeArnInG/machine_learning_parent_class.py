@@ -6,8 +6,6 @@ import logging
 from sys import stderr
 
 import numpy as np
-import pandas as pd
-import sklearn
 
 
 class MachineLearningModel:

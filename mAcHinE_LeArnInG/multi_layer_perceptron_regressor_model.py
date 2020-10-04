@@ -1,4 +1,3 @@
-import time
 from os import path
 
 from sklearn.metrics import median_absolute_error
