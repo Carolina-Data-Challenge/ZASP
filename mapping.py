@@ -6,7 +6,7 @@ import json
 with urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json') as response:
     counties = json.load(response)
 
-tx = pd.read_csv("master_2018.csv", encoding="ISO-8859-1", dtype={"county_code": str})
+tx = pd.read_csv("master_2019.csv", encoding="ISO-8859-1", dtype={"county_code": str})
 
 fig = px.choropleth_mapbox(tx, geojson=counties, locations='county_code', color='zasp_index',
                            color_continuous_scale="Viridis",
