@@ -9,7 +9,8 @@ Specifically, to submit your project you will be required to complete the follow
 
 ---
 
-**PASTE PUBLIC VIDEO LINK HERE: ___________________________**
+**PASTE PUBLIC VIDEO LINK HERE: https://www.youtube.com/watch?v=Y1pV1Ki5Eac**
+Presentation: https://docs.google.com/presentation/d/1k4MwasgFYdIVLj3VdFcJfkeGItn-aBQYyewZvSs1y-4/edit?usp=sharing
 
 ---
 
